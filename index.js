@@ -5,13 +5,25 @@ var config = require('./config'),
     request = Promise.promisify(require("request"));    
     Projects = require('./lib/Projects'),
     Itemtypes = require('./lib/Itemtypes'),
-    Filters = require('./lib/Filters');
+    Filters = require('./lib/Filters'),
+    Picklists = require('./lib/Picklists'),
+    PicklistOptions = require('./lib/PicklistOptions'),
+    RelationshipTypes = require('./lib/RelationshipTypes'),
+    Releases = require('./lib/Releases'),
+    Comments = require('./lib/Comments'),
+    Activities = require('./lib/Activities');
 
 var API = function(username, password) {
     this.authenticate(username, password);
     this.projects = new Projects(this);
     this.itemtypes = new Itemtypes(false, this);
     this.filters = new Filters(this);
+    this.picklists = new Picklists(this);
+    this.picklistoptions = new PicklistOptions(this);
+    this.realtionshiptypes = new RelationshipTypes(this);
+    this.releases = new Releases(this);
+    this.comments = new Comments(this);
+    this.activities = new Activities(this);
 };
 
 API.prototype.authenticate = function(username, password) {
