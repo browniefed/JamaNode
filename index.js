@@ -31,7 +31,8 @@ API.prototype.getBaseUrl = function() {
     return this._baseUrl || '';
 }
 
-API.prototype.authenticate = function(username, password) {
+API.prototype.authenticate = function(restUrl, username, password) {
+    this._baseUrl = restUrl;
     this.username = username;
     this.password = password;
 }
