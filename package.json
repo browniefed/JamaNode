@@ -1,6 +1,6 @@
 {
   "name": "jama-rest-api",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "The Jama REST API implemented in Node.JS",
   "main": "index.js",
   "scripts": {
