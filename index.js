@@ -11,7 +11,8 @@ var config = require('./config'),
     RelationshipTypes = require('./lib/RelationshipTypes'),
     Releases = require('./lib/Releases'),
     Comments = require('./lib/Comments'),
-    Activities = require('./lib/Activities');
+    Activities = require('./lib/Activities'),
+    Users = require('./lib/Users');
 
 var API = function(username, password) {
     this.authenticate(username, password);
@@ -24,6 +25,7 @@ var API = function(username, password) {
     this.releases = new Releases(this);
     this.comments = new Comments(this);
     this.activities = new Activities(this);
+    this.users = new Users(this);
 };
 
 API.prototype.authenticate = function(username, password) {
