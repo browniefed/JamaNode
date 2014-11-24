@@ -1,7 +1,7 @@
 {
-  "name": "JamaAPI",
-  "version": "0.0.0",
-  "description": "The Jama API implemented in Node.JS",
+  "name": "jama-rest-api",
+  "version": "0.0.1",
+  "description": "The Jama REST API implemented in Node.JS",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
