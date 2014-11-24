@@ -1,6 +1,6 @@
 {
   "name": "jama-rest-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The Jama REST API implemented in Node.JS",
   "main": "index.js",
   "scripts": {
@@ -13,10 +13,9 @@
   "author": "Jason Brown <browniefed@gmail.com> (http://browniefed.com/)",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^2.3.11",
     "lodash": "^2.4.1",
-    "request": "^2.47.0",
-    "sprintf-js": "^1.0.2"
+    "sprintf-js": "^1.0.2",
+    "superagent": "^0.21.0"
   },
   "keywords": [
     "jama",

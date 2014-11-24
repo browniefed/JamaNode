@@ -1,8 +1,7 @@
 var config = require('./config'),
     sprintf = require("sprintf-js").sprintf
     _ = require('lodash'),
-    Promise = require('bluebird'),
-    request = Promise.promisify(require("request"));    
+    request = require('superagent'),    
     Projects = require('./lib/Projects'),
     Itemtypes = require('./lib/Itemtypes'),
     Filters = require('./lib/Filters'),
@@ -33,28 +32,22 @@ API.prototype.authenticate = function(username, password) {
 }
 
 API.prototype.callServer = function(method, path) {
-    return request({
-        url: path,
-        method: method,
-        headers: {
-            'Authorization': 'Basic ' + this.authHash
-        }
-    });
+    return request[method](path).set('Authorization', 'Basic ' + this.authHash);
 }
 API.prototype.get = function(path) {
-    return this.callServer('GET', path);
+    return this.callServer('get', path);
 }
 
 API.prototype.post = function(path) {
-    return this.callServer('POST', path);
+    return this.callServer('post', path);
 }
 
 API.prototype.put = function(path) {
-    return this.callServer('PUT', path);
+    return this.callServer('put', path);
 } 
 
 API.prototype.del = function(path) {
-    return this.callServer('DELETE', path);
+    return this.callServer('delete', path);
 }
 API.prototype.mergePath = function() {
     return Array.prototype.slice.call(arguments).join('/');
