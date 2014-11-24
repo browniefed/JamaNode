@@ -27,25 +27,17 @@ var API = function(apiInfo) {
     this.users = new Users(this);
 };
 
-function base64Encode(string) {
-    var b64 = this.btoa;
-    if (b64) {
-        return b64(string);
-    } else if (Buffer) {
-        return new Buffer(string).toString('base64');
-    }
-}
-
 API.prototype.getBaseUrl = function() {
     return this._baseUrl || '';
 }
 
 API.prototype.authenticate = function(username, password) {
-    this.authHash = base64Encode(username + ':' + password);
+    this.username = username;
+    this.password = password;
 }
 
 API.prototype.callServer = function(method, path) {
-    return request[method](this.getBaseUrl() + '/' + path).set('Authorization', 'Basic ' + this.authHash);
+    return request[method](this.getBaseUrl() + '/' + path).auth(this.username, this.password);
 }
 API.prototype.get = function(path) {
     return this.callServer('get', path);
