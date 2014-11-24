@@ -1,5 +1,4 @@
-var config = require('./config'),
-    sprintf = require("sprintf-js").sprintf
+var sprintf = require("sprintf-js").sprintf
     _ = require('lodash'),
     request = require('superagent'),    
     Projects = require('./lib/Projects'),
@@ -13,8 +12,9 @@ var config = require('./config'),
     Activities = require('./lib/Activities'),
     Users = require('./lib/Users');
 
-var API = function(username, password) {
-    this.authenticate(username, password);
+var API = function(apiInfo) {
+    this._baseUrl = apiInfo.restURL;
+    this.authenticate(apiInfo.username, apiInfo.password);
     this.projects = new Projects(this);
     this.itemtypes = new Itemtypes(false, this);
     this.filters = new Filters(this);
@@ -27,12 +27,25 @@ var API = function(username, password) {
     this.users = new Users(this);
 };
 
+function base64Encode(string) {
+    var b64 = this.btoa;
+    if (b64) {
+        return b64(string);
+    } else if (Buffer) {
+        return new Buffer(string).toString('base64');
+    }
+}
+
+API.prototype.getBaseUrl = function() {
+    return this._baseUrl || '';
+}
+
 API.prototype.authenticate = function(username, password) {
-    this.authHash = new Buffer(username + ':' + password).toString('base64');
+    this.authHash = base64Encode(username + ':' + password);
 }
 
 API.prototype.callServer = function(method, path) {
-    return request[method](path).set('Authorization', 'Basic ' + this.authHash);
+    return request[method](this.getBaseUrl() + '/' + path).set('Authorization', 'Basic ' + this.authHash);
 }
 API.prototype.get = function(path) {
     return this.callServer('get', path);
@@ -59,7 +72,7 @@ API.prototype.buildNamePath = function(path, args) {
 
 API.prototype.buildPath = function() {
     var addPath = Array.prototype.slice.call(arguments).join('/');
-    return config.path + addPath;
+    return addPath;
 }
 // API.prototype.views = {};
 // API.prototype.relationshiprulesets = {};
