@@ -25,7 +25,7 @@ var sprintf = require("sprintf-js").sprintf
 
 var API = function(apiInfo) {
     this._baseUrl = apiInfo.restURL;
-    this.authenticate(apiInfo.username, apiInfo.password);
+    this.authenticate(apiInfo.restURL, apiInfo.username, apiInfo.password);
 
     this.views = new Views(this);
     this.relationshiprulesets = new RelationshipRulesets(this);
@@ -47,7 +47,7 @@ var API = function(apiInfo) {
     this.comments = new Comments(this);
     this.activities = new Activities(this);
     this.reuse = new Reuse(this);
-    this.integrations = new Integartions(this);
+    this.integrations = new Integrations(this);
 };
 
 API.prototype.getBaseUrl = function() {
