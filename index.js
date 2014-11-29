@@ -1,5 +1,4 @@
 var sprintf = require("sprintf-js").sprintf
-    _ = require('lodash'),
     request = require('superagent'), 
     Views = require('./lib/Views'),   
     RelationshipRulesets = require('./lib/RelationshipRulesets'),
@@ -23,6 +22,37 @@ var sprintf = require("sprintf-js").sprintf
     Reuse = require('./lib/Reuse'),
     Integrations = require('./lib/Integrations');
 
+/**
+ * JamaAPI
+ * @constructor
+ * @param {Object} apiInfo Pass in restURL, username, password to authenticate
+ * @param {string} apiInfo.restURL The restURl to your api
+ * @param {string} apiInfo.username The username of the user to authenticate with
+ * @param {string} apiInfo.password The password of the user to authenticate with
+ * @mixes Views
+ * @mixes RelationshipRulesets
+ * @mixes Projects
+ * @mixes ItemTypes
+ * @mixes AbstractItems
+ * @mixes Items
+ * @mixes TestPlans
+ * @mixes TestCycles
+ * @mixes TestRuns
+ * @mixes Attachments
+ * @mixes Filters
+ * @mixes Picklists
+ * @mixes PicklistOptions
+ * @mixes Relationships
+ * @mixes RelationshipTypes
+ * @mixes Users
+ * @mixes Releases
+ * @mixes Comments
+ * @mixes Activities
+ * @mixes Reuse
+ * @mixes Integrations
+ *
+ * @description All end points export a raw, incomplete request from superagent. This allows you to add in additional data/headers/etc to the request. You must call .end to make the request
+ */
 var API = function(apiInfo) {
     this._baseUrl = apiInfo.restURL;
     this.authenticate(apiInfo.restURL, apiInfo.username, apiInfo.password);
@@ -53,7 +83,12 @@ var API = function(apiInfo) {
 API.prototype.getBaseUrl = function() {
     return this._baseUrl || '';
 }
-
+/**
+ * Authenticate the JamaAPI for a new user/restURL
+ * @param  {string} restUrl
+ * @param  {string} username
+ * @param  {string} password
+ */
 API.prototype.authenticate = function(restUrl, username, password) {
     this._baseUrl = restUrl;
     this.username = username;
@@ -67,8 +102,8 @@ API.prototype.get = function(path, data) {
     return this.callServer('get', path, data);
 }
 
-API.prototype.post = function(path, data) {
-    return this.callServer('post', path, data);
+API.prototype.post = function(path, data, query) {
+    return this.callServer('post', path, data).query(query|| {});
 }
 
 API.prototype.put = function(path, data) {
@@ -90,24 +125,5 @@ API.prototype.buildPath = function() {
     var addPath = Array.prototype.slice.call(arguments).join('/');
     return addPath;
 }
-// API.prototype.views = {};
-// API.prototype.relationshiprulesets = {};
-// API.prototype.itemtypes = {};
-// API.prototype.attachements = {};
-// API.prototype.items = {};
-// API.prototype.testplans = {};
-// API.prototype.testcycles = {};
-// API.prototype.testruns = {};
-// API.prototype.filters = {};
-// API.prototype.picklists = {};
-// API.prototype.piclistoptions = {};
-// API.prototype.relationships = {};
-// API.prototype.relationshiptypes = {};
-// API.prototype.users = {};
-// API.prototype.releases = {};
-// API.prototype.comments = {};
-// API.prototype.activities = {};
-// API.prototype.reuse = {};
-// API.prototype.integrations = {};
 
 module.exports = API;
