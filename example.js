@@ -10,3 +10,7 @@ var Jama = new JamaAPI({
 Jama.users.current().end(function(err, res) {
     console.log(res.body);
 })
+
+Jama.projects.get().end(function(err, res) {
+    console.log(res.body);
+})
