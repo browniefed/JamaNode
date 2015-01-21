@@ -96,7 +96,12 @@ API.prototype.authenticate = function(restUrl, username, password) {
 }
 
 API.prototype.callServer = function(method, path, data) {
-    return request[method](this.getBaseUrl() + '/' + path).auth(this.username, this.password).send(data || {});
+    //Always using send wasn't working in the browser
+    var req = request[method](this.getBaseUrl() + '/' + path).auth(this.username, this.password);
+    if (req == 'get') {
+        return req.query(data || {});
+    }
+    return req.send(data || {});
 }
 API.prototype.get = function(path, data) {
     return this.callServer('get', path, data);
